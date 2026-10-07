@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sushant Prakash Portfolio</title>
+<meta name="description" content="Sushant Prakash — mechanical engineering student and data analyst. Python, Power BI, predictive maintenance and dashboard projects.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=JetBrains+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+/* Layout: a technical datasheet — top identity band with a live sensor trace, then full-width "figures" for each project, spec tables for skills. Single column, wide measure for charts, narrow measure for prose. */
+:root {
+  --bg: #F2F4F8;
+  --surface: #FFFFFF;
+  --ink: #0F1728;
+  --muted: #586378;
+  --rule: #D8DEE8;
+  --accent: #2346C4;
+  --accent-soft: #E4E9FA;
+  --signal: #C9711E;
+  --signal-soft: #F8EADB;
+  --font-display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0B1020; --surface: #121A2E; --ink: #E5E9F2; --muted: #98A3B8; --rule: #253049;
+    --accent: #84A0FF; --accent-soft: #1B2648; --signal: #F0A24F; --signal-soft: #3A2A18;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0B1020; --surface: #121A2E; --ink: #E5E9F2; --muted: #98A3B8; --rule: #253049;
+  --accent: #84A0FF; --accent-soft: #1B2648; --signal: #F0A24F; --signal-soft: #3A2A18;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.6;
+  padding-inline: 20px; padding-block: 0;
+}
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+p { margin: 0; }
+.wrap { max-width: 1040px; margin: 0 auto; }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.label { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+
+/* ---------- top bar ---------- */
+.topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding-block: 18px; border-bottom: 1px solid var(--rule); }
+.topbar nav { display: flex; gap: 20px; flex-wrap: wrap; font-size: 0.9375rem; }
+.topbar nav a { color: var(--ink); text-decoration: none; }
+.topbar nav a:hover { color: var(--accent); }
+
+/* ---------- hero ---------- */
+.hero { padding-block: 56px 40px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 48px; align-items: end; }
+.name {
+  font-family: var(--font-display); font-weight: 850; font-stretch: 125%;
+  font-size: clamp(2.6rem, 7vw, 4.6rem); line-height: 0.92; letter-spacing: -0.02em; text-transform: uppercase;
+}
+.role { margin-top: 18px; font-family: var(--font-display); font-stretch: 75%; font-weight: 600; font-size: 1.375rem; color: var(--accent); }
+.intro { margin-top: 14px; color: var(--muted); max-width: 46ch; }
+.contact { margin-top: 22px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; font-size: 0.9375rem; }
+.copy {
+  font: 500 0.6875rem/1 var(--font-mono); letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--accent); background: transparent; border: 1px solid var(--rule); border-radius: 3px; padding: 5px 8px; cursor: pointer;
+}
+.copy:hover { border-color: var(--accent); }
+
+.scope { background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 14px 14px 10px; display: flex; flex-direction: column; gap: 8px; }
+.scope-head { display: flex; justify-content: space-between; gap: 8px; }
+.scope svg { width: 100%; height: auto; display: block; }
+.scope .grid line { stroke: var(--rule); stroke-width: 1; }
+.scope .band { fill: var(--signal-soft); }
+.scope .trace { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-linejoin: round; }
+.scope .trace-fault { fill: none; stroke: var(--signal); stroke-width: 1.8; stroke-linejoin: round; }
+.scope text { font-family: var(--font-mono); font-size: 10px; fill: var(--muted); }
+.scope text.sig { fill: var(--signal); }
+@media (prefers-reduced-motion: no-preference) {
+  .scope .trace, .scope .trace-fault { stroke-dasharray: 2000; stroke-dashoffset: 0; animation: draw 1.6s ease-out both; }
+  @keyframes draw { from { stroke-dashoffset: 2000; } to { stroke-dashoffset: 0; } }
+}
+
+/* ---------- sections ---------- */
+section { padding-block: 48px; border-top: 1px solid var(--rule); scroll-margin-top: 16px; }
+.sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 28px; flex-wrap: wrap; }
+.sec-head h2 { font-family: var(--font-display); font-stretch: 112%; font-weight: 800; font-size: 1.75rem; text-transform: uppercase; letter-spacing: -0.01em; }
+.summary { font-size: 1.25rem; line-height: 1.55; max-width: 60ch; }
+
+.project { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; }
+.project + .project { margin-top: 56px; padding-top: 48px; border-top: 1px dashed var(--rule); }
+.project-text { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.project-text h3 { font-family: var(--font-display); font-stretch: 100%; font-weight: 750; font-size: 1.375rem; line-height: 1.25; }
+.status { display: inline-block; font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 7px; border-radius: 3px; background: var(--signal-soft); color: var(--signal); vertical-align: middle; margin-left: 6px; }
+.stack { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-family: var(--font-mono); font-size: 0.75rem; padding: 3px 8px; border: 1px solid var(--rule); border-radius: 3px; color: var(--muted); }
+.project ul { margin: 0; padding-left: 1.1rem; display: flex; flex-direction: column; gap: 8px; }
+.project li::marker { color: var(--accent); }
+.project strong { font-weight: 600; }
+
+.figures { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.fig { background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+.fig-title { font-weight: 600; font-size: 0.9375rem; line-height: 1.35; }
+.fig-cap { font-size: 0.8125rem; color: var(--muted); }
+
+/* horizontal bar chart */
+.bars { display: flex; flex-direction: column; gap: 10px; }
+.bar-row { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr) 3.2rem; gap: 10px; align-items: center; font-size: 0.875rem; }
+.bar-track { position: relative; height: 18px; background: repeating-linear-gradient(to right, var(--rule) 0 1px, transparent 1px 25%); background-size: calc(100% + 1px) 100%; }
+.bar { position: absolute; inset: 3px auto 3px 0; background: var(--muted); opacity: 0.55; border-radius: 0 2px 2px 0; }
+.bar.lead { background: var(--accent); opacity: 1; }
+.bar-val { text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 0.8125rem; }
+.axis { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr) 3.2rem; gap: 10px; }
+.axis-ticks { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.6875rem; color: var(--muted); }
+
+/* stacked outcome bar */
+.stacked { display: flex; height: 30px; border-radius: 3px; overflow: hidden; }
+.stacked span { display: block; height: 100%; }
+.seg-done { background: var(--accent); }
+.seg-cancel { background: var(--signal); }
+.seg-nodriver { background: var(--ink); }
+.seg-rest { background: var(--rule); }
+.legend { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 16px; font-size: 0.8125rem; }
+.legend div { display: flex; align-items: center; gap: 8px; }
+.sw { width: 10px; height: 10px; border-radius: 2px; flex: none; }
+.legend .mono { margin-left: auto; }
+
+.stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+.stat { background: var(--surface); padding: 14px 16px; display: flex; flex-direction: column; gap: 2px; }
+.stat b { font-family: var(--font-display); font-stretch: 90%; font-weight: 750; font-size: 1.625rem; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.stat span { font-size: 0.8125rem; color: var(--muted); }
+
+/* spec table */
+.spec { width: 100%; border-collapse: collapse; }
+.spec th, .spec td { text-align: left; vertical-align: top; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.spec th { width: 12rem; padding-right: 24px; font-family: var(--font-mono); font-weight: 400; font-size: 0.8125rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; padding-top: 14px; }
+.spec tr:last-child th, .spec tr:last-child td { border-bottom: 0; }
+
+.edu { display: flex; flex-direction: column; }
+.edu-row { display: grid; grid-template-columns: 6rem minmax(0, 1fr) auto; gap: 20px; padding-block: 14px; border-bottom: 1px solid var(--rule); align-items: baseline; }
+.edu-row:first-child { padding-top: 0; }
+.edu-row:last-child { border-bottom: 0; }
+.edu-row .mono { color: var(--muted); font-size: 0.875rem; }
+.edu-row .grade { font-family: var(--font-mono); font-size: 0.875rem; font-variant-numeric: tabular-nums; }
+.edu-row small { display: block; color: var(--muted); font-size: 0.875rem; }
+
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; }
+
+footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; color: var(--muted); font-size: 0.875rem; }
+
+@media (max-width: 860px) {
+  .hero, .project, .two { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .hero { padding-block: 40px 32px; }
+}
+@media (max-width: 520px) {
+  .topbar nav { gap: 14px; }
+  .bar-row, .axis { grid-template-columns: 6.2rem minmax(0, 1fr) 2.8rem; gap: 8px; }
+  .legend { grid-template-columns: minmax(0, 1fr); }
+  .spec th { width: auto; display: block; padding-bottom: 2px; border-bottom: 0; }
+  .spec td { display: block; padding-top: 0; }
+  .spec tr { display: block; border-bottom: 1px solid var(--rule); padding-block: 4px 8px; }
+  .spec tr:last-child { border-bottom: 0; }
+  .spec td { border-bottom: 0; }
+  .edu-row { grid-template-columns: minmax(0, 1fr) auto; }
+  .edu-row .mono:first-child { grid-column: 1 / -1; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="topbar">
+    <span class="label">Sushant Prakash · Data Analyst</span>
+    <nav aria-label="Sections">
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1 class="name">Sushant<br>Prakash</h1>
+      <p class="role">Mechanical engineer turning sensor and operations data into decisions</p>
+      <p class="intro">Final-year B.Tech student at NSUT and aspiring data analyst. I work in Python and Power BI, from raw data through cleaning, modeling and dashboards to a deliverable a stakeholder can use.</p>
+      <div class="contact">
+        <span class="mono" id="email-text">prakash.sushant11@gmail.com</span>
+        <button class="copy" id="copy-email" type="button">Copy</button>
+        <a href="https://www.linkedin.com/in/sushantprakash56" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/hey-sp" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+    <figure class="scope" style="margin:0" aria-label="Illustrative sensor trace with a highlighted fault window">
+      <div class="scope-head"><span class="label">Supply air temp · °C</span><span class="label">60-min window</span></div>
+      <svg id="trace" viewBox="0 0 600 150" role="img" aria-hidden="true"></svg>
+      <figcaption class="fig-cap">Illustrative trace. My RTU project detects windows like the highlighted one and names the fault behind them.</figcaption>
+    </figure>
+  </div>
+
+  <section id="projects">
+    <div class="sec-head"><span class="label">01</span><h2>Projects</h2></div>
+
+    <article class="project">
+      <div class="project-text">
+        <h3>RTU Predictive Maintenance: HVAC Fault Diagnosis and Health Analytics <span class="status">In progress</span></h3>
+        <div class="stack"><span class="chip">Python</span><span class="chip">Pandas</span><span class="chip">scikit-learn</span><span class="chip">Streamlit</span><span class="chip">pytest</span></div>
+        <ul>
+          <li>End-to-end analysis of the public LBNL rooftop HVAC fault dataset: <strong>81 scenario files</strong> across simulated, lab and field sources.</li>
+          <li>Cleaned sensor data with unit harmonisation, physical-range checks, and dropout and spike detection, then engineered <strong>275–374 features</strong> per 60-minute window. The pipeline is covered by <strong>100 pytest tests</strong>.</li>
+          <li>Trained gradient-boosting fault classifiers with leakage-safe validation (1-day embargo, day-grouped CV). On 6 simulated fault types, the model reached <strong>0.78 macro F1</strong> on fault severities never seen in training.</li>
+          <li>Built a 0–1 fault-severity health index, checked against simulated efficiency (COP) loss. Refrigerant-charge faults didn't generalise, and that limitation is documented.</li>
+          <li>Built a Streamlit dashboard for detection, diagnosis, health index and rule-based maintenance advice, with every value labelled as measured, predicted or threshold-based. TreeSHAP showed two of the top three signals reflect how faults were injected, so field-readiness checks come next.</li>
+        </ul>
+      </div>
+      <div class="figures">
+        <div class="fig">
+          <p class="fig-title">Fault classification on 3 lab fault types</p>
+          <div class="bars" role="img" aria-label="Macro F1: gradient boosting 0.851, random forest 0.81, logistic regression 0.68">
+            <div class="bar-row"><span>Gradient boosting</span><div class="bar-track"><div class="bar lead" style="width:85.1%"></div></div><span class="bar-val">0.851</span></div>
+            <div class="bar-row"><span>Random forest</span><div class="bar-track"><div class="bar" style="width:81%"></div></div><span class="bar-val">0.81</span></div>
+            <div class="bar-row"><span>Logistic regression</span><div class="bar-track"><div class="bar" style="width:68%"></div></div><span class="bar-val">0.68</span></div>
+          </div>
+          <div class="axis" aria-hidden="true"><span></span><div class="axis-ticks"><span>0</span><span>0.25</span><span>0.5</span><span>0.75</span><span>1.0</span></div><span></span></div>
+          <p class="fig-cap">Macro F1 score. Higher is better.</p>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>R² 0.91</b><span>Health index, evaporator fouling</span></div>
+          <div class="stat"><b>R² 0.83</b><span>Health index, condenser fouling</span></div>
+        </div>
+        <p class="fig-cap">Random-forest severity estimates on severity levels held out from training.</p>
+      </div>
+    </article>
+
+    <article class="project">
+      <div class="project-text">
+        <h3>Ride-Booking Analytics Dashboard</h3>
+        <div class="stack"><span class="chip">Power BI</span><span class="chip">DAX</span><span class="chip">Power Query</span></div>
+        <ul>
+          <li>Six-page interactive Power BI dashboard (Overview, Vehicle Type, Revenue, Cancellation, Ratings, Summary) tracking bookings, cancellations, revenue, and driver and customer ratings, with date and vehicle-type slicers on every page.</li>
+          <li>Cleaned and modelled <strong>21 raw booking fields</strong> in Power Query, including VTAT/CTAT, cancellation reasons and payment method.</li>
+          <li>Wrote DAX measures for cancellation rate, a composite service-quality score, a rolling 7-day revenue trend, revenue momentum, customer retention rate and a premium peak-hour index.</li>
+          <li>Found that Auto earned the most revenue of any vehicle type because it had the most bookings, not a higher average fare.</li>
+        </ul>
+      </div>
+      <div class="figures">
+        <div class="fig">
+          <p class="fig-title">What happened to 150,000 ride bookings in 2024</p>
+          <div class="stacked" role="img" aria-label="62% completed, 25% cancelled, 7% no driver found, 6% other">
+            <span class="seg-done" style="width:62%"></span><span class="seg-cancel" style="width:25%"></span><span class="seg-nodriver" style="width:7%"></span><span class="seg-rest" style="width:6%"></span>
+          </div>
+          <div class="legend">
+            <div><span class="sw seg-done"></span>Completed<span class="mono">62%</span></div>
+            <div><span class="sw seg-cancel"></span>Cancelled by driver or customer<span class="mono">25%</span></div>
+            <div><span class="sw seg-nodriver"></span>No driver found<span class="mono">7%</span></div>
+            <div><span class="sw seg-rest"></span>Other outcomes<span class="mono">6%</span></div>
+          </div>
+          <p class="fig-cap">The 7% "no driver found" gap is a supply problem, and it's called out on the dashboard's Cancellation page.</p>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>₹1.17 Cr</b><span>Revenue from Auto, the top vehicle type</span></div>
+          <div class="stat"><b>37,419</b><span>Auto rides, the highest volume</span></div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section id="skills">
+    <div class="sec-head"><span class="label">02</span><h2>Skills</h2></div>
+    <table class="spec">
+      <tr><th scope="row">Languages</th><td>Python, SQL</td></tr>
+      <tr><th scope="row">Data analysis</th><td>Data cleaning, exploratory data analysis (EDA), feature engineering, predictive modeling, model evaluation, time-series analysis</td></tr>
+      <tr><th scope="row">Visualization &amp; BI</th><td>Power BI (DAX, Power Query), Streamlit, Matplotlib, KPI dashboards</td></tr>
+      <tr><th scope="row">Libraries &amp; tools</th><td>Excel, Pandas, NumPy, scikit-learn, pytest</td></tr>
+      <tr><th scope="row">Data engineering</th><td>ETL and data pipelines, data validation</td></tr>
+    </table>
+  </section>
+
+  <section id="education">
+    <div class="two">
+      <div>
+        <div class="sec-head"><span class="label">03</span><h2>Education</h2></div>
+        <div class="edu">
+          <div class="edu-row"><span class="mono">2023–27</span><div>Netaji Subhas University of Technology<small>B.Tech, Mechanical Engineering</small></div><span></span></div>
+          <div class="edu-row"><span class="mono">2022</span><div>The Air Force School, Subroto Park<small>CBSE Class XII</small></div><span class="grade">92.6%</span></div>
+          <div class="edu-row"><span class="mono">2020</span><div>The Air Force School, Subroto Park<small>CBSE Class X</small></div><span class="grade">91.4%</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="sec-head"><span class="label">04</span><h2>Achievements</h2></div>
+        <p>Won the 2026 Inter-Branch Basketball Competition, representing the Mechanical Engineering branch.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="sec-head"><span class="label">05</span><h2>Contact</h2></div>
+    <p class="summary">I'm looking for data analyst roles. The quickest way to reach me is email, at <span class="mono">prakash.sushant11@gmail.com</span>, or a message on <a href="https://www.linkedin.com/in/sushantprakash56" target="_blank" rel="noopener">LinkedIn</a>.</p>
+  </section>
+
+  <footer>
+    <span>Sushant Prakash · New Delhi</span>
+    <span class="mono">Updated Oct 2026</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var btn = document.getElementById('copy-email'), em = document.getElementById('email-text');
+  btn.addEventListener('click', function () {
+    function sel() { var r = document.createRange(); r.selectNodeContents(em); var s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = 'Selected'; }
+    try { navigator.clipboard.writeText(em.textContent.trim()).then(function () { btn.textContent = 'Copied'; }, sel); } catch (e) { sel(); }
+    setTimeout(function () { btn.textContent = 'Copy'; }, 1800);
+  });
+
+  // Illustrative sensor trace: steady signal with noise, then a drifting fault window.
+  var svg = document.getElementById('trace'), NS = 'http://www.w3.org/2000/svg';
+  var W = 600, H = 150, top = 12, bot = 128, n = 120, f0 = 78, f1 = 106;
+  var seed = 7; function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+  var ymin = 10, ymax = 20;
+  function y(v) { return bot - (v - ymin) / (ymax - ymin) * (bot - top); }
+  function x(i) { return 28 + i / (n - 1) * (W - 36); }
+  var pts = [];
+  for (var i = 0; i < n; i++) {
+    var v = 13 + 0.6 * Math.sin(i / 7) + (rnd() - 0.5) * 0.7;
+    if (i >= f0 && i <= f1) v += 3.6 * Math.sin(Math.PI * (i - f0) / (f1 - f0)) + (rnd() - 0.5) * 0.5;
+    pts.push([x(i), y(v)]);
+  }
+  function el(tag, attrs) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); return e; }
+  var g = el('g', { 'class': 'grid' });
+  [12, 14, 16, 18].forEach(function (v) {
+    g.appendChild(el('line', { x1: 28, x2: W - 8, y1: y(v), y2: y(v) }));
+    var t = el('text', { x: 0, y: y(v) + 3 }); t.textContent = v; svg.appendChild(t);
+  });
+  svg.appendChild(el('rect', { 'class': 'band', x: x(f0), y: top, width: x(f1) - x(f0), height: bot - top }));
+  svg.appendChild(g);
+  function path(a) { return a.map(function (p, j) { return (j ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' '); }
+  svg.appendChild(el('path', { 'class': 'trace', d: path(pts.slice(0, f0 + 1)) }));
+  svg.appendChild(el('path', { 'class': 'trace-fault', d: path(pts.slice(f0, f1 + 1)) }));
+  svg.appendChild(el('path', { 'class': 'trace', d: path(pts.slice(f1)) }));
+  var lab = el('text', { 'class': 'sig', x: x(f0) + 4, y: top + 11 }); lab.textContent = 'FAULT WINDOW'; svg.appendChild(lab);
+  var t0 = el('text', { x: 28, y: H - 4 }); t0.textContent = 't − 60 min'; svg.appendChild(t0);
+  var t1 = el('text', { x: W - 8, y: H - 4, 'text-anchor': 'end' }); t1.textContent = 'now'; svg.appendChild(t1);
+})();
+</script>
+</body>
+</html>
